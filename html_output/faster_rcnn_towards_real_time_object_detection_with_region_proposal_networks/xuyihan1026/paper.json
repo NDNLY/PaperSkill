@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "paperName": "faster_rcnn_towards_real_time_object_detection_with_region_proposal_networks",
+  "title": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
+  "authors": [
+    "Shaoqing Ren",
+    "Kaiming He",
+    "Ross Girshick",
+    "Jian Sun"
+  ],
+  "year": 2016,
+  "venue": "IEEE TPAMI (arXiv:1506.01497v3)",
+  "paperUrl": "https://arxiv.org/abs/1506.01497",
+  "participants": [
+    {
+      "name": "徐乙涵",
+      "github": "NDNLY",
+      "jianlunId": "f892c6de4ff65a0c38261a2876b62b02"
+    }
+  ],
+  "topics": [
+    "目标检测",
+    "区域候选网络",
+    "锚框",
+    "特征共享"
+  ],
+  "skillVersion": "1.4.0",
+  "status": "review",
+  "entry": "index.html",
+  "version": "xuyihan1026",
+  "versionDate": "2026-10-26"
+}

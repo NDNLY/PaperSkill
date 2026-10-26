@@ -1,0 +1,44 @@
+/* Paper-specific overrides. This is the ONLY stylesheet the generator edits.
+   Keep the semantic color roles from tokens.css stable (see the unified-theme section of
+   the build skill): --blue = guidance/current, --green = success/paper method,
+   --red = failure/old method, --orange = emphasis, --purple = auxiliary.
+   Do NOT rewrite tokens.css / components.css. */
+
+:root {
+  /* Faster R-CNN tutorial scene palette — a night observatory. */
+  --paper-sky: #101826;
+  --paper-sky-2: #1b2434;
+  --paper-grid: #3b4a63;
+  --paper-star: #e8c26a;
+  --paper-frame: #f0b429;
+  --paper-rail: #92400e;
+  --paper-route: #4f8cc9;
+  --paper-good: #228d5c;
+  --paper-bad: #c43f52;
+  --paper-aux: #a78bfa;
+  --paper-fader: #f07e47;
+  --paper-ink: #e8edf5;
+  --paper-muted: #8a97ad;
+  --paper-axis: #2a3547;
+}
+
+/* The Canvas kit paints its own night field inside the canvas. Everything OUTSIDE the
+   canvas (cards, headings, body copy) must keep the template's light theme, so --paper and
+   the --ink family are deliberately NOT overridden here. */
+canvas {
+  background: var(--paper-sky);
+}
+
+/* Keep control rows readable next to the 1080x280 canvases. */
+.module .ctrl {
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+.module .chip-row {
+  flex-wrap: wrap;
+}
+
+.module .ctrl label {
+  white-space: nowrap;
+}

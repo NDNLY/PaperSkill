@@ -56,7 +56,7 @@ function drawHand(ctx: CanvasRenderingContext2D, x: number, y: number): void {
   ctx.beginPath();
   ctx.ellipse(x + 9, y, 12, 11.5, 0, 0, Math.PI * 2);
   ctx.fill();
-  ctx.fillRect(x + 17, y - 9, 13, 18);
+  ctx.fillRect(x + 15, y - 8.5, 14, 17);
 
   // Palm, four fingers reaching left, thumb.
   ctx.strokeStyle = COLORS.ink;
@@ -77,12 +77,9 @@ function drawHand(ctx: CanvasRenderingContext2D, x: number, y: number): void {
   ctx.lineTo(x + 12, y + 12);
   ctx.stroke();
 
-  // Sleeve cuff in the mount-rail copper.
-  ctx.fillStyle = COLORS.rail;
-  ctx.fillRect(x + 19, y - 8, 10, 16);
-  ctx.strokeStyle = COLORS.sky;
-  ctx.lineWidth = 1.5;
-  ctx.strokeRect(x + 19, y - 8, 10, 16);
+  // Wrist, so the silhouette reads as a hand reaching in.
+  ctx.fillStyle = COLORS.ink;
+  ctx.fillRect(x + 15, y - 6.5, 12, 13);
   ctx.restore();
 }
 export const Ch2Ana: React.FC<WidgetProps> = () => {
@@ -98,14 +95,6 @@ export const Ch2Ana: React.FC<WidgetProps> = () => {
       const fx = GX + col * CW;
       const fy = GY + CH;
 
-      // The patch the frame is heading for.
-      const arrival = clamp((slide - 0.78) / 0.22, 0, 1);
-      ctx.save();
-      ctx.globalAlpha = 0.06 + 0.1 * arrival;
-      ctx.fillStyle = COLORS.frame;
-      ctx.fillRect(GX + 2 * CW + 1, GY + CH + 1, 2 * CW - 2, 2 * CH - 2);
-      ctx.restore();
-
       // Cells currently under the frame.
       ctx.save();
       ctx.globalAlpha = 0.17;
@@ -116,6 +105,14 @@ export const Ch2Ana: React.FC<WidgetProps> = () => {
           ctx.fillRect(GX + c * CW + 1, GY + r * CH + 1, CW - 2, CH - 2);
         }
       }
+      ctx.restore();
+
+      // The patch the frame is heading for lights up once it arrives.
+      const arrival = clamp((slide - 0.78) / 0.22, 0, 1);
+      ctx.save();
+      ctx.globalAlpha = 0.07 + 0.14 * arrival;
+      ctx.fillStyle = COLORS.frame;
+      ctx.fillRect(GX + 2 * CW + 1, GY + CH + 1, 2 * CW - 2, 2 * CH - 2);
       ctx.restore();
 
       // Faint survey grid.

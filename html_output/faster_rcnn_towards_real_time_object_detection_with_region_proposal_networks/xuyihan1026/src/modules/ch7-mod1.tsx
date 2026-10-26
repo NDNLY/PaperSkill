@@ -138,7 +138,7 @@ export const Ch7Mod1: React.FC<WidgetProps> = ({ chapterId, moduleId }) => {
         });
       } else {
         // no second stage: the survey camera must classify every cell itself
-        drawScope(ctx, 96, 106, 1.15, { accent: COLORS.bad });
+        drawScope(ctx, 96, 106, 1.15, { accent: COLORS.route });
         drawArrow(ctx, 124, 106, 186, 106, COLORS.bad);
         ctx.save();
         ctx.globalAlpha = 0.1;

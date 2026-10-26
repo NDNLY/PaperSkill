@@ -19,10 +19,10 @@ const H = 140;
 const LOOP_MS = 3400;
 
 const STAR = { x: 200, y: 34 };
-const KEPT = { x: 200, y: 88, w: 84, h: 44 };
+const KEPT = { x: 200, y: 94, w: 84, h: 44 };
 const DUPS = [
-  { x: 124, y: 62, w: 74, h: 40, rot: -0.13, exit: { x: -40, y: 18 } },
-  { x: 278, y: 68, w: 74, h: 40, rot: 0.11, exit: { x: 604, y: 26 } },
+  { x: 118, y: 58, w: 74, h: 40, rot: -0.13, exit: { x: -40, y: 14 } },
+  { x: 286, y: 64, w: 74, h: 40, rot: 0.11, exit: { x: 604, y: 24 } },
 ];
 const REST = { x: 470, y: 104 };
 
@@ -97,7 +97,7 @@ function drawHand(ctx: CanvasRenderingContext2D, x: number, y: number): void {
   ctx.beginPath();
   ctx.ellipse(x + 9, y, 12, 11.5, 0, 0, Math.PI * 2);
   ctx.fill();
-  ctx.fillRect(x + 17, y - 9, 13, 18);
+  ctx.fillRect(x + 15, y - 8.5, 14, 17);
 
   // Palm, four fingers reaching left, thumb.
   ctx.strokeStyle = COLORS.ink;
@@ -118,12 +118,9 @@ function drawHand(ctx: CanvasRenderingContext2D, x: number, y: number): void {
   ctx.lineTo(x + 12, y + 12);
   ctx.stroke();
 
-  // Sleeve cuff in the mount-rail copper.
-  ctx.fillStyle = COLORS.rail;
-  ctx.fillRect(x + 19, y - 8, 10, 16);
-  ctx.strokeStyle = COLORS.sky;
-  ctx.lineWidth = 1.5;
-  ctx.strokeRect(x + 19, y - 8, 10, 16);
+  // Wrist, so the silhouette reads as a hand reaching in.
+  ctx.fillStyle = COLORS.ink;
+  ctx.fillRect(x + 15, y - 6.5, 12, 13);
   ctx.restore();
 }
 export const Ch9Ana: React.FC<WidgetProps> = () => {
@@ -142,6 +139,8 @@ export const Ch9Ana: React.FC<WidgetProps> = () => {
 
       const t = (time % LOOP_MS) / LOOP_MS;
       const hand = { x: REST.x, y: REST.y };
+      let handVisible = false;
+      let handAlpha = 1;
 
       DUPS.forEach((d, k) => {
         const start = 0.1 + k * 0.3;
@@ -154,10 +153,13 @@ export const Ch9Ana: React.FC<WidgetProps> = () => {
         drawSlip(ctx, px, py, d.w, d.h, d.rot + e * 0.2, COLORS.muted, 1 - drag * 0.9, false);
         // Hand reaches the slip first, then carries it off the sky.
         if (q > 0) {
+          handVisible = true;
           const grab = clamp(q / 0.3, 0, 1);
+          handAlpha = clamp(q / 0.12, 0, 1);
           if (drag > 0) {
             hand.x = px + 52;
             hand.y = py + 2;
+            handAlpha *= 1 - clamp((drag - 0.6) / 0.4, 0, 1) * 0.95;
           } else {
             hand.x = lerp(REST.x, d.x + 52, grab);
             hand.y = lerp(REST.y, d.y + 2, grab);
@@ -168,7 +170,12 @@ export const Ch9Ana: React.FC<WidgetProps> = () => {
       // The one record that stays.
       drawSlip(ctx, KEPT.x, KEPT.y, KEPT.w, KEPT.h, 0, COLORS.good, 1, true);
 
-      drawHand(ctx, hand.x, hand.y);
+      if (handVisible) {
+        ctx.save();
+        ctx.globalAlpha = handAlpha;
+        drawHand(ctx, hand.x, hand.y);
+        ctx.restore();
+      }
 
       drawLegend(ctx, 318, 18, [
         { color: COLORS.muted, text: '重复记录' },

@@ -83,7 +83,11 @@ export const Ch2Mod1: React.FC<WidgetProps> = () => {
     const hit = cellFromPointer(e);
     if (!hit) return;
     dragging.current = true;
-    e.currentTarget.setPointerCapture(e.pointerId);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // Synthetic or unsupported pointer capture: dragging still works.
+    }
     moveTo(hit.r, hit.c);
   };
 
@@ -95,8 +99,12 @@ export const Ch2Mod1: React.FC<WidgetProps> = () => {
 
   const onPointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
     dragging.current = false;
-    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-      e.currentTarget.releasePointerCapture(e.pointerId);
+    try {
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
+    } catch {
+      // Ignore release failures for pointers that were never captured.
     }
   };
 
@@ -204,7 +212,7 @@ export const Ch2Mod1: React.FC<WidgetProps> = () => {
         ctx.stroke();
       }
 
-      const forkX = fx + len;
+      const stemX = fx + fw / 2;
       const top = 136;
       const tileW = 42;
       const tileH = 13;
@@ -216,15 +224,15 @@ export const Ch2Mod1: React.FC<WidgetProps> = () => {
       ctx.strokeStyle = COLORS.muted;
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(forkX, fy + fh);
-      ctx.lineTo(forkX, 122);
+      ctx.moveTo(stemX, fy + fh);
+      ctx.lineTo(stemX, 122);
       ctx.stroke();
       ctx.beginPath();
-      ctx.moveTo(forkX, 122);
+      ctx.moveTo(stemX, 122);
       ctx.lineTo(clsX + tileW / 2, top);
       ctx.stroke();
       ctx.beginPath();
-      ctx.moveTo(forkX, 122);
+      ctx.moveTo(stemX, 122);
       ctx.lineTo(regX + tileW / 2, top);
       ctx.stroke();
       ctx.restore();

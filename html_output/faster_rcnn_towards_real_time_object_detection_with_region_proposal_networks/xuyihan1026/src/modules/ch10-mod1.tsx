@@ -74,10 +74,8 @@ function drawTrackBar(
   color: string
 ): void {
   ctx.save();
-  ctx.globalAlpha = 0.85;
-  ctx.fillStyle = COLORS.axis;
+  ctx.fillStyle = COLORS.sky2;
   ctx.fillRect(TRACK_X, y, TRACK_W, BAR_H);
-  ctx.globalAlpha = 1;
   ctx.strokeStyle = COLORS.grid;
   ctx.lineWidth = 1.5;
   ctx.strokeRect(TRACK_X, y, TRACK_W, BAR_H);
@@ -185,7 +183,7 @@ export const Ch10Mod1: React.FC<WidgetProps> = () => {
       typeof window !== 'undefined' &&
       typeof window.matchMedia === 'function' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    stateRef.current.start = reduce ? performance.now() - 4000 : performance.now();
+    stateRef.current.start = reduce ? -1e6 : performance.now();
     stateRef.current.race = 0;
     setRace(0);
   };

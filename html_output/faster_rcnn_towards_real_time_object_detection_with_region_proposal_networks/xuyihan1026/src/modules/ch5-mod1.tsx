@@ -78,7 +78,7 @@ function drawBar(
   color: string
 ): void {
   ctx.save();
-  ctx.fillStyle = COLORS.axis;
+  ctx.fillStyle = COLORS.sky2;
   ctx.fillRect(x, y, w, h);
   ctx.strokeStyle = COLORS.grid;
   ctx.lineWidth = 1.5;

@@ -54,12 +54,14 @@ function easeInOut(t: number): number {
 }
 
 export const Ch4Ana: React.FC<WidgetProps> = () => {
-  const stateRef = useRef<Record<string, never>>({});
+  const stateRef = useRef<{ start: number }>({ start: -1 });
 
-  const { ref } = useCanvas<Record<string, never>>(
-    (ctx, time) => {
+  const { ref } = useCanvas<{ start: number }>(
+    (ctx, time, s) => {
+      if (s.start < 0) s.start = time;
       clearScene(ctx, W, H);
-      const p = (time % LOOP) / LOOP;
+      const elapsed = ((time - s.start) % LOOP + LOOP) % LOOP;
+      const p = elapsed / LOOP;
       const travel = easeInOut(clamp((p - 0.12) / 0.43, 0, 1));
       const fade = clamp(
         p < 0.05 ? p / 0.05 : p > 0.92 ? (1 - p) / 0.08 : 1,
@@ -104,7 +106,7 @@ export const Ch4Ana: React.FC<WidgetProps> = () => {
       });
       drawHand(ctx, fx - 38, fy + 26, fade);
 
-      drawLabel(ctx, '空处', 142, 114, { color: COLORS.muted, size: 13 });
+      drawLabel(ctx, '空处', 96, 114, { color: COLORS.muted, size: 13 });
       drawLabel(ctx, '目标星', TARGET.x - 18, TARGET.y - 40, {
         color: COLORS.muted,
         size: 13,

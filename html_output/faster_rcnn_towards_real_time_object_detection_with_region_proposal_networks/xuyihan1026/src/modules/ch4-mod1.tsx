@@ -245,14 +245,7 @@ export const Ch4Mod1: React.FC<WidgetProps> = ({ chapterId, moduleId }) => {
 
   return (
     <div>
-      <canvas
-        id={`cv-${chapterId}-${moduleId}`}
-        ref={ref}
-        width={W}
-        height={H}
-        onClick={onCanvasClick}
-        style={{ cursor: 'pointer' }}
-      />
+      <canvas id={`cv-${chapterId}-${moduleId}`} ref={ref} width={W} height={H} onClick={onCanvasClick} style={{ cursor: 'pointer' }} />
       <div className="ctrl">
         <label>
           当前 IoU <span className="val">{CASES[sel].iou.toFixed(2)}</span>

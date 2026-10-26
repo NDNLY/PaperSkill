@@ -199,7 +199,7 @@ function drawPartIcon(
     arrowHead(ctx, cx + 9 * s, cy, 'right', COLORS.muted);
     drawFrame(ctx, cx + 25 * s, cy, 26 * s, 26 * s, { color: COLORS.good, weight: 3 });
   } else {
-    drawScope(ctx, cx, cy + 6 * s, 0.85 * s, { pointing: true, accent: COLORS.aux });
+    drawScope(ctx, cx, cy + 5 * s, 0.95 * s, { pointing: true, accent: COLORS.aux });
   }
 }
 
@@ -224,7 +224,7 @@ export const Ch8Mod1: React.FC<WidgetProps> = () => {
         const pts = EDGE[key];
         const active = activeEdges.includes(key);
         const sharedLink = key === 'e-cr' || key === 'e-cro';
-        if (active) strokePath(ctx, pts, COLORS.fader, 7, false, 0.26);
+        if (active) strokePath(ctx, pts, COLORS.fader, 9, false, 0.32);
         if (sharedLink) {
           strokePath(ctx, pts, s.share ? COLORS.rail : COLORS.muted, 3, !s.share, 1);
         } else {

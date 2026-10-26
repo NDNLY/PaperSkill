@@ -59,12 +59,14 @@ function easeInOut(t: number): number {
 }
 
 export const Ch7Ana: React.FC<WidgetProps> = () => {
-  const stateRef = useRef<Record<string, never>>({});
+  const stateRef = useRef<{ start: number }>({ start: -1 });
 
-  const { ref } = useCanvas<Record<string, never>>(
-    (ctx, time) => {
+  const { ref } = useCanvas<{ start: number }>(
+    (ctx, time, s) => {
+      if (s.start < 0) s.start = time;
       clearScene(ctx, W, H);
-      const p = (time % LOOP) / LOOP;
+      const elapsed = ((time - s.start) % LOOP + LOOP) % LOOP;
+      const p = elapsed / LOOP;
       const sweep = easeInOut(clamp((p - 0.08) / 0.44, 0, 1));
       const x = lerp(76, 390, sweep);
       const detected = p > 0.54;

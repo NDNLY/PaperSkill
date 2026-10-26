@@ -194,13 +194,16 @@ export const Ch8Mod2: React.FC<WidgetProps> = () => {
           }
           ctx.restore();
 
+          ctx.save();
+          ctx.globalAlpha = status === 'train' ? 0.78 : status === 'frozen' ? 0.8 : 0.45;
           drawRowIcon(
             ctx,
             row,
             x + CELL_X + 20,
             y + ROW_H / 2,
-            status === 'train' ? COLORS.good : status === 'frozen' ? COLORS.muted : COLORS.grid
+            status === 'train' ? COLORS.ink : status === 'frozen' ? COLORS.muted : COLORS.grid
           );
+          ctx.restore();
 
           if (status === 'frozen') {
             drawLock(ctx, x + CELL_X + CELL_W - 20, y + ROW_H / 2, COLORS.muted);

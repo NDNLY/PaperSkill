@@ -139,9 +139,9 @@ export const Ch6Mod1: React.FC<WidgetProps> = () => {
         const cx0 = AX + (sx * AW) / 2;
         const cy0 = AY + (sy * AH) / 2;
         ctx.beginPath();
-        ctx.moveTo(cx0 - sx * 10, cy0);
+        ctx.moveTo(cx0 + sx * 10, cy0);
         ctx.lineTo(cx0, cy0);
-        ctx.lineTo(cx0, cy0 - sy * 10);
+        ctx.lineTo(cx0, cy0 + sy * 10);
         ctx.stroke();
       });
       ctx.restore();
